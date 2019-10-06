@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Timed Walk Test
+
+This web application is designed to ease the entry of timed walk test results into a full Electronic Medical Record system. It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
@@ -66,3 +68,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+### Known Issues
+Console log message caused by Bootstrap 4: https://github.com/twbs/bootstrap/pull/29455

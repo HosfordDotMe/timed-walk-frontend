@@ -3,7 +3,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Formik, Field, ErrorMessage } from 'formik';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
