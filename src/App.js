@@ -1,10 +1,22 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWalking } from '@fortawesome/free-solid-svg-icons';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  NavLink,
+} from 'react-router-dom';
 import TestWizard from './components/TestWizard';
 
 function Home() {
   return <h2>Home</h2>;
+}
+
+function Results() {
+  return <h2>Results</h2>;
 }
 
 function Settings() {
@@ -15,9 +27,9 @@ export default function App() {
   return (
     <Router>
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
           <Link className="navbar-brand" to="/">
-            Timed Walk Test
+            <FontAwesomeIcon icon={faWalking} />
           </Link>
           <button
             className="navbar-toggler"
@@ -32,22 +44,40 @@ export default function App() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav">
-              <Link className="nav-item nav-link" to="/test">
+              <NavLink
+                className="nav-item nav-link"
+                to="/new-test"
+                activeClassName="active"
+              >
                 Perform a Test
-              </Link>
-              <Link className="nav-item nav-link" to="/settings">
+              </NavLink>
+              <NavLink
+                className="nav-item nav-link"
+                to="/results"
+                activeClassName="active"
+              >
+                View Previous Results
+              </NavLink>
+              <NavLink
+                className="nav-item nav-link"
+                to="/settings"
+                activeClassName="active"
+              >
                 Settings
-              </Link>
+              </NavLink>
             </div>
           </div>
         </nav>
 
         <Switch>
-          <Route path="/test">
+          <Route path="/new-test">
             <TestWizard />
           </Route>
           <Route path="/settings">
             <Settings />
+          </Route>
+          <Route path="/results">
+            <Results />
           </Route>
           <Route path="/">
             <Home />
