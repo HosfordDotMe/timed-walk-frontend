@@ -5,8 +5,6 @@
 import React from 'react';
 import { Formik, Field, ErrorMessage } from 'formik';
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
 class Wizard extends React.Component {
   static Page = ({ children }) => children;
 
@@ -98,7 +96,7 @@ class Wizard extends React.Component {
   }
 }
 
-const TestWizard = () => (
+const NewTest = () => (
   <div className="App container justify-content-center">
     <div className="row justify-content-center">
       <div className="col-md-10">
@@ -115,14 +113,36 @@ const TestWizard = () => (
             testNotes: '',
 
             completionTime: '',
-            completionAssistance: '',
             completionNotes: '',
           }}
           onSubmit={(values, actions) => {
-            sleep(300).then(() => {
-              window.alert(JSON.stringify(values, null, 2));
-              actions.setSubmitting(false);
-            });
+            const formBody = Object.keys(values)
+              .map(
+                key =>
+                  `${encodeURIComponent(key)}=${encodeURIComponent(
+                    values[key]
+                  )}`
+              )
+              .join('&');
+
+            fetch('/api/v1/test/create', {
+              method: 'post',
+              headers: {
+                'Content-Type':
+                  'application/x-www-form-urlencoded;charset=UTF-8',
+              },
+              body: formBody,
+            })
+              .then(res => {
+                if (!res.ok) {
+                  throw Error(res.statusText);
+                }
+                return res;
+              })
+              .then(data => {
+                window.location = data.headers.get('Location');
+              });
+            actions.setSubmitting(false);
           }}
         >
           <Wizard.Page
@@ -349,16 +369,19 @@ const TestWizard = () => (
             </div>
             <div className="row">
               <div className="col-md-12">
+                <label htmlFor="completionNotes">
+                  Additional Completion Notes
+                </label>
                 <div className="form-group">
                   <Field
                     type="text"
                     component="textarea"
                     rows="6"
                     className="form-control"
-                    name="testNotes"
+                    name="completionNotes"
                   />
                   <ErrorMessage
-                    name="testNotes"
+                    name="completionNotes"
                     component="div"
                     className="field-error"
                   />
@@ -372,4 +395,4 @@ const TestWizard = () => (
   </div>
 );
 
-export default TestWizard;
+export default NewTest;
