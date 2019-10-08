@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Spinner from 'react-bootstrap/Spinner';
 
 const API = `${process.env.REACT_APP_API_URI}/${process.env.REACT_APP_API_VERSION}`;
+console.log(API);
 
 function TestRow({ testResult }) {
   return (
