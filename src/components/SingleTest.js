@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Spinner from 'react-bootstrap/Spinner';
 
 const API = `${process.env.REACT_APP_API_URI}/${process.env.REACT_APP_API_VERSION}`;
@@ -38,7 +38,7 @@ export default class SingleTestView extends Component {
     return (
       <div className="App container justify-content-center">
         <div className="row justify-content-center">
-          <div className="col-md-12">
+          <div className="col-md-10">
             <div className="card">
               <div className="card-header">Timed 10 Meter Walk Test</div>
               <div className="card-body">
@@ -81,3 +81,13 @@ export default class SingleTestView extends Component {
     );
   }
 }
+
+SingleTestView.propTypes = {
+  match: PropTypes.shape({
+    path: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};

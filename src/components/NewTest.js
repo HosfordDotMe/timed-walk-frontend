@@ -1,13 +1,9 @@
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable consistent-return */
 
-// TODO: Prop Types
-/* eslint-disable react/prop-types */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Formik, Field, ErrorMessage } from 'formik';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-// import PropTypes from 'prop-types';
 
 const API = `${process.env.REACT_APP_API_URI}/${process.env.REACT_APP_API_VERSION}`;
 class Wizard extends React.Component {
@@ -46,7 +42,7 @@ class Wizard extends React.Component {
     }
     bag.setTouched({});
     bag.setSubmitting(false);
-    this.next(values);
+    return this.next(values);
   };
 
   render() {
@@ -95,6 +91,24 @@ class Wizard extends React.Component {
     );
   }
 }
+
+Wizard.propTypes = {
+  initialValues: PropTypes.shape({
+    patientName: PropTypes.string.isRequired,
+    patientHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    patientWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    patientDOB: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]).isRequired,
+    patientNotes: PropTypes.string.isRequired,
+    testDate: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]).isRequired,
+    testDistance: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    testNotes: PropTypes.string.isRequired,
+    completionTime: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    completionNotes: PropTypes.string.isRequired,
+  }).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.array.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
 
 const NewTest = () => (
   <div className="App container justify-content-center">

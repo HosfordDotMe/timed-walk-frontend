@@ -1,7 +1,30 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Spinner from 'react-bootstrap/Spinner';
 
 const API = `${process.env.REACT_APP_API_URI}/${process.env.REACT_APP_API_VERSION}`;
+
+function TestRow({ testResult }) {
+  return (
+    <tr>
+      <th scope="row">
+        <a href={`/test/${testResult._id}`}>{testResult.patientName}</a>
+      </th>
+      <td>{new Date(testResult.testDate).toLocaleDateString()}</td>
+      <td>{parseFloat(testResult.testDistance / testResult.completionTime).toFixed(2)} m/s</td>
+    </tr>
+  );
+}
+
+TestRow.propTypes = {
+  testResult: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    patientName: PropTypes.string.isRequired,
+    testDate: PropTypes.string.isRequired,
+    testDistance: PropTypes.number.isRequired,
+    completionTime: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
 export default class ResultsView extends Component {
   constructor(props) {
@@ -44,16 +67,8 @@ export default class ResultsView extends Component {
                 </tr>
               </thead>
               <tbody>
-                {data.map(result => (
-                  <tr key={result._id}>
-                    <th scope="row">
-                      <a href={`/test/${result._id}`}>{result.patientName}</a>
-                    </th>
-                    <td>{new Date(result.testDate).toLocaleDateString()}</td>
-                    <td>
-                      {parseFloat(result.testDistance / result.completionTime).toFixed(2)} m/s
-                    </td>
-                  </tr>
+                {data.map(testResult => (
+                  <TestRow key={testResult._id} testResult={testResult} />
                 ))}
               </tbody>
             </table>

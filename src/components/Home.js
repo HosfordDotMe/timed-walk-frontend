@@ -5,8 +5,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 function Instructions() {
   return (
     <>
-      <h1 className="text-center">Instructions</h1>
-      <p className="text-center">Please select from the following</p>
+      <h1 className="text-center d-none d-sm-block">Instructions</h1>
+      <p className="text-center d-none d-sm-block">Please select from the following</p>
       <div className="row">
         <div className="col-md-6">
           <Card className="text-center">
