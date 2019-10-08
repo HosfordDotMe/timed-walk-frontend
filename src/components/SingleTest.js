@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
 
 const API = `${process.env.REACT_APP_API_URI}/${process.env.REACT_APP_API_VERSION}`;
 
-export default class ResultsView extends Component {
+export default class SingleTestView extends Component {
   constructor(props) {
     const { match } = props;
     super(props);
@@ -23,8 +24,15 @@ export default class ResultsView extends Component {
 
   render() {
     const { data, isLoading } = this.state;
+
     if (isLoading) {
-      return <p>Loading...</p>;
+      return (
+        <div className="d-flex justify-content-center">
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      );
     }
 
     return (
@@ -61,6 +69,7 @@ export default class ResultsView extends Component {
                   {data.completionTime &&
                     data.testDistance &&
                     `Speed: ${parseFloat(data.testDistance / data.completionTime).toFixed(2)} m/s`}
+                  {data.completionTime && data.testDistance && <br />}
                   {data.completionNotes && `Post-Test Notes: ${data.completionNotes}`}
                   {data.completionNotes && <br />}
                 </pre>
