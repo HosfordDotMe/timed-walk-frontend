@@ -1,9 +1,9 @@
-/* eslint-disable no-underscore-dangle */
 import React, { Component } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
 
 const API = `${process.env.REACT_APP_API_URI}/${process.env.REACT_APP_API_VERSION}`;
 
-class ResultsView extends Component {
+export default class ResultsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,13 +22,19 @@ class ResultsView extends Component {
     const { data, isLoading } = this.state;
 
     if (isLoading) {
-      return <p>Loading ...</p>;
+      return (
+        <div className="d-flex justify-content-center">
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      );
     }
 
     return (
       <div className="App container justify-content-center">
         <div className="row justify-content-center">
-          <div className="col-md-12">
+          <div className="col-md-10">
             <table className="table table-striped border">
               <thead>
                 <tr>
@@ -45,10 +51,7 @@ class ResultsView extends Component {
                     </th>
                     <td>{new Date(result.testDate).toLocaleDateString()}</td>
                     <td>
-                      {parseFloat(
-                        result.testDistance / result.completionTime
-                      ).toFixed(2)}{' '}
-                      m/s
+                      {parseFloat(result.testDistance / result.completionTime).toFixed(2)} m/s
                     </td>
                   </tr>
                 ))}
@@ -60,4 +63,3 @@ class ResultsView extends Component {
     );
   }
 }
-export default ResultsView;

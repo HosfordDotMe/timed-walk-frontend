@@ -1,10 +1,15 @@
-/* eslint-disable consistent-return */
 /* eslint-disable react/destructuring-assignment */
+/* eslint-disable consistent-return */
+
+// TODO: Prop Types
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Formik, Field, ErrorMessage } from 'formik';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+// import PropTypes from 'prop-types';
 
+const API = `${process.env.REACT_APP_API_URI}/${process.env.REACT_APP_API_VERSION}`;
 class Wizard extends React.Component {
   static Page = ({ children }) => children;
 
@@ -28,9 +33,7 @@ class Wizard extends React.Component {
     }));
 
   validate = values => {
-    const activePage = React.Children.toArray(this.props.children)[
-      this.state.page
-    ];
+    const activePage = React.Children.toArray(this.props.children)[this.state.page];
     return activePage.props.validate ? activePage.props.validate(values) : {};
   };
 
@@ -72,10 +75,7 @@ class Wizard extends React.Component {
               )}
 
               {!isLastPage && (
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-lg float-right"
-                >
+                <button type="submit" className="btn btn-primary btn-lg float-right">
                   Next »
                 </button>
               )}
@@ -117,19 +117,12 @@ const NewTest = () => (
           }}
           onSubmit={(values, actions) => {
             const formBody = Object.keys(values)
-              .map(
-                key =>
-                  `${encodeURIComponent(key)}=${encodeURIComponent(
-                    values[key]
-                  )}`
-              )
+              .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(values[key])}`)
               .join('&');
-
-            fetch('/api/v1/test/create', {
+            fetch(`${API}/test/create`, {
               method: 'post',
               headers: {
-                'Content-Type':
-                  'application/x-www-form-urlencoded;charset=UTF-8',
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
               },
               body: formBody,
             })
@@ -168,11 +161,7 @@ const NewTest = () => (
                 name="patientName"
                 placeholder="First Last"
               />
-              <ErrorMessage
-                name="patientName"
-                component="div"
-                className="field-error"
-              />
+              <ErrorMessage name="patientName" component="div" className="field-error" />
             </div>
             <div className="row">
               <div className="col-md-4">
@@ -185,11 +174,7 @@ const NewTest = () => (
                       name="patientHeight"
                       placeholder="Height"
                     />
-                    <ErrorMessage
-                      name="patientHeight"
-                      component="div"
-                      className="field-error"
-                    />
+                    <ErrorMessage name="patientHeight" component="div" className="field-error" />
                     <div className="input-group-append">
                       <span className="input-group-text">centimeters</span>
                     </div>
@@ -207,11 +192,7 @@ const NewTest = () => (
                       name="patientWeight"
                       placeholder="Weight"
                     />
-                    <ErrorMessage
-                      name="patientWeight"
-                      component="div"
-                      className="field-error"
-                    />
+                    <ErrorMessage name="patientWeight" component="div" className="field-error" />
                     <div className="input-group-append">
                       <span className="input-group-text">kilograms</span>
                     </div>
@@ -228,11 +209,7 @@ const NewTest = () => (
                     name="patientDOB"
                     placeholder="Enter Patient Weight"
                   />
-                  <ErrorMessage
-                    name="patientDOB"
-                    component="div"
-                    className="field-error"
-                  />
+                  <ErrorMessage name="patientDOB" component="div" className="field-error" />
                 </div>
               </div>
             </div>
@@ -247,12 +224,13 @@ const NewTest = () => (
                     className="form-control"
                     name="patientNotes"
                   />
-                  <ErrorMessage
-                    name="patientNotes"
-                    component="div"
-                    className="field-error"
-                  />
+                  <ErrorMessage name="patientNotes" component="div" className="field-error" />
                 </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <ProgressBar now={33} className="mb-3" />
               </div>
             </div>
           </Wizard.Page>
@@ -279,11 +257,7 @@ const NewTest = () => (
                     Date<sup>*</sup>
                   </label>
                   <Field type="Date" className="form-control" name="testDate" />
-                  <ErrorMessage
-                    name="testDate"
-                    component="div"
-                    className="field-error"
-                  />
+                  <ErrorMessage name="testDate" component="div" className="field-error" />
                 </div>
               </div>
               <div className="col-md-4">
@@ -301,11 +275,7 @@ const NewTest = () => (
                     <div className="input-group-append">
                       <span className="input-group-text">meters</span>
                     </div>
-                    <ErrorMessage
-                      name="testDistance"
-                      component="div"
-                      className="field-error"
-                    />
+                    <ErrorMessage name="testDistance" component="div" className="field-error" />
                   </div>
                 </div>
               </div>
@@ -321,12 +291,13 @@ const NewTest = () => (
                     className="form-control"
                     name="testNotes"
                   />
-                  <ErrorMessage
-                    name="testNotes"
-                    component="div"
-                    className="field-error"
-                  />
+                  <ErrorMessage name="testNotes" component="div" className="field-error" />
                 </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <ProgressBar now={66} className="mb-3" />
               </div>
             </div>
           </Wizard.Page>
@@ -340,9 +311,7 @@ const NewTest = () => (
             }}
           >
             <h1 className="text-center">Perform Test</h1>
-            <p className="text-center">
-              Please perform the timed walk test and record the results
-            </p>
+            <p className="text-center">Please perform the timed walk test and record the results</p>
             <div className="row">
               <div className="col-md-4">
                 <div className="form-group">
@@ -350,28 +319,18 @@ const NewTest = () => (
                     Elapsed Time<sup>*</sup>
                   </label>
                   <div className="input-group">
-                    <Field
-                      type="number"
-                      className="form-control"
-                      name="completionTime"
-                    />
+                    <Field type="number" className="form-control" name="completionTime" />
                     <div className="input-group-append">
                       <span className="input-group-text">seconds</span>
                     </div>
                   </div>
-                  <ErrorMessage
-                    name="completionTime"
-                    component="div"
-                    className="field-error"
-                  />
+                  <ErrorMessage name="completionTime" component="div" className="field-error" />
                 </div>
               </div>
             </div>
             <div className="row">
               <div className="col-md-12">
-                <label htmlFor="completionNotes">
-                  Additional Completion Notes
-                </label>
+                <label htmlFor="completionNotes">Additional Completion Notes</label>
                 <div className="form-group">
                   <Field
                     type="text"
@@ -380,12 +339,13 @@ const NewTest = () => (
                     className="form-control"
                     name="completionNotes"
                   />
-                  <ErrorMessage
-                    name="completionNotes"
-                    component="div"
-                    className="field-error"
-                  />
+                  <ErrorMessage name="completionNotes" component="div" className="field-error" />
                 </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <ProgressBar now={100} className="mb-3" />
               </div>
             </div>
           </Wizard.Page>

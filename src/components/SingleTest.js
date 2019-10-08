@@ -1,9 +1,9 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 
 const API = `${process.env.REACT_APP_API_URI}/${process.env.REACT_APP_API_VERSION}`;
 
-class ResultsView extends Component {
+export default class ResultsView extends Component {
   constructor(props) {
     const { match } = props;
     super(props);
@@ -38,36 +38,30 @@ class ResultsView extends Component {
                   Patient Name: {data.patientName}
                   <br />
                   {data.patientDOB &&
-                    `Patient DOB: ${new Date(
-                      data.patientDOB
-                    ).toLocaleDateString()}`}
+                    `Patient DOB: ${new Date(data.patientDOB).toLocaleDateString()}`}
                   {/* TODO: This is odd but using interpolation shows
                   'object' text */}
                   {data.patientDOB && <br />}
-                  {data.patientHeight &&
-                    `Patient Height: ${data.patientHeight} cm`}
+                  {data.patientHeight && `Patient Height: ${data.patientHeight} cm`}
                   {data.patientHeight && <br />}
-                  {data.patientWeight &&
-                    `Patient Weight: ${data.patientWeight} kg`}
+                  {data.patientWeight && `Patient Weight: ${data.patientWeight} kg`}
                   {data.patientWeight && <br />}
                   {data.patientNotes && `Patient Notes: ${data.patientNotes}`}
                   {data.patientNotes && <br />}
                   <hr />
-                  {data.testDate &&
-                    `Test Date: ${new Date(
-                      data.testDate
-                    ).toLocaleDateString()}`}
+                  {data.testDate && `Test Date: ${new Date(data.testDate).toLocaleDateString()}`}
                   {data.testDate && <br />}
                   {data.testDistance && `Test Distance: ${data.testDistance} m`}
                   {data.testDistance && <br />}
                   {data.testNotes && `Test Notes: ${data.testNotes}`}
                   {data.testNotes && <br />}
                   <hr />
-                  {data.completionTime &&
-                    `Elapsed Time: ${data.completionTime} seconds`}
+                  {data.completionTime && `Elapsed Time: ${data.completionTime} seconds`}
                   {data.completionTime && <br />}
-                  {data.completionNotes &&
-                    `Post-Test Notes: ${data.completionNotes}`}
+                  {data.completionTime &&
+                    data.testDistance &&
+                    `Speed: ${parseFloat(data.testDistance / data.completionTime).toFixed(2)} m/s`}
+                  {data.completionNotes && `Post-Test Notes: ${data.completionNotes}`}
                   {data.completionNotes && <br />}
                 </pre>
               </div>
@@ -78,4 +72,3 @@ class ResultsView extends Component {
     );
   }
 }
-export default ResultsView;
