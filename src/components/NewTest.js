@@ -14,6 +14,7 @@ class Wizard extends React.Component {
     this.state = {
       page: 0,
       values: props.initialValues,
+      isDisabled: false,
     };
   }
 
@@ -38,6 +39,7 @@ class Wizard extends React.Component {
     const { page } = this.state;
     const isLastPage = page === React.Children.count(children) - 1;
     if (isLastPage) {
+      this.setState.isDisabled = true;
       return onSubmit(values, bag);
     }
     bag.setTouched({});
@@ -47,7 +49,7 @@ class Wizard extends React.Component {
 
   render() {
     const { children } = this.props;
-    const { page, values } = this.state;
+    const { page, values, isDisabled } = this.state;
     const activePage = React.Children.toArray(children)[page];
     const isLastPage = page === React.Children.count(children) - 1;
     return (
@@ -79,7 +81,7 @@ class Wizard extends React.Component {
                 <button
                   type="submit"
                   className="btn btn-success btn-lg float-right"
-                  disabled={isSubmitting}
+                  disabled={isDisabled || isSubmitting}
                 >
                   Submit
                 </button>
@@ -155,7 +157,7 @@ const NewTest = () => (
           <Wizard.Page
             validate={values => {
               const errors = {};
-              if (!values.patientName) {
+              if (!values.patientName || values.patientName.trim() === '') {
                 errors.patientName = 'A valid patient name is required';
               }
               return errors;
