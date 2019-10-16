@@ -1,9 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav } from 'react-bootstrap';
+import 'semantic-ui-css/semantic.min.css';
+import { Container, Menu } from 'semantic-ui-react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWalking } from '@fortawesome/free-solid-svg-icons';
-import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, NavLink, Link } from 'react-router-dom';
 import Home from './components/Home';
 import NewTest from './components/NewTest';
 import SingleTest from './components/SingleTest';
@@ -12,24 +14,19 @@ import Results from './components/Results';
 export default function App() {
   return (
     <Router>
-      <Navbar bg="primary" variant="dark" expand="lg" className="mb-3">
-        <div className="container">
-          <Navbar.Brand href="/">
-            <FontAwesomeIcon icon={faWalking} /> Timed Walk Test
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <NavLink className="nav-link" to="/new-test" activeClassName="active">
-                Perform a Test
-              </NavLink>
-              <NavLink className="nav-link" to="/results" activeClassName="active">
-                View Previous Results
-              </NavLink>
-            </Nav>
-          </Navbar.Collapse>
-        </div>
-      </Navbar>
+      <Menu size="huge" borderless stackable inverted color="blue" style={{ marginBottom: '1em' }}>
+        <Container>
+          <Menu.Item as={Link} to="/" header>
+            <FontAwesomeIcon icon={faWalking} style={{ marginRight: '1em' }} /> Timed Walk Test
+          </Menu.Item>
+          <Menu.Item as={NavLink} exact to="/new-test">
+            Perform a Test
+          </Menu.Item>
+          <Menu.Item as={NavLink} exact to="/results">
+            View Previous Results
+          </Menu.Item>
+        </Container>
+      </Menu>
 
       <Switch>
         <Route path="/test/:id" component={SingleTest} />
